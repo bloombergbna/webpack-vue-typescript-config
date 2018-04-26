@@ -79,6 +79,7 @@ module.exports.createDevServer = function(config) {
       if (err) {
         reject(err)
       } else {
+        const nextPort = parseInt(port) + 1
         // publish the new Port, necessary for e2e tests
         process.env.PORT = port
         // add port to devServer config
@@ -86,7 +87,7 @@ module.exports.createDevServer = function(config) {
 
         let successMessage = [
           `Your application is running at http://${host}:${port}`,
-          `Webpack Analyzer is running at http://${host}:${port + 1}`
+          `Webpack Analyzer is running at http://${host}:${nextPort}`
         ]
 
         if(proxyHost) {
@@ -102,7 +103,7 @@ module.exports.createDevServer = function(config) {
         }))
 
         config.plugins.push(new BundleAnalyzerPlugin({
-          analyzerPort: port + 1,
+          analyzerPort: nextPort,
           openAnalyzer: false,
           logLevel: 'silent'
         }))
